@@ -1,18 +1,18 @@
-from window import Window, Point, Line
+from graphics import Window, Point, Line, Cell
 
 
 def main():
     win = Window(800, 600)
 
-    top_line = Line(Point(200, 200), Point(500, 200))
-    left_line = Line(Point(200, 200), Point(200, 500))
-    right_line = Line(Point(500, 200), Point(500, 500))
-    bottom_line = Line(Point(200, 500), Point(500, 500))
+    cell_one = Cell(50, 100, 100, 150, win, left_wall=False, bottom_wall=False)
+    cell_two = Cell(50, 100, 150, 200, win, top_wall=False, bottom_wall=False)
+    cell_three = Cell(50, 100, 200, 250, win, top_wall=False, right_wall=False)
+    cell_four = Cell(100, 150, 200, 250, win, left_wall=False, right_wall=False)
 
-    win.draw_line(top_line, "green")
-    win.draw_line(left_line, "green")
-    win.draw_line(right_line, "green")
-    win.draw_line(bottom_line, "green")
+    cell_one.draw()
+    cell_two.draw()
+    cell_three.draw()
+    cell_four.draw()
 
     win.wait_for_close()
 
