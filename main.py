@@ -1,18 +1,21 @@
-from graphics import Window, Point, Line, Cell
+from graphics import Window
+from cell import Cell
 
 
 def main():
     win = Window(800, 600)
 
-    cell_one = Cell(50, 100, 100, 150, win, left_wall=False, bottom_wall=False)
-    cell_two = Cell(50, 100, 150, 200, win, top_wall=False, bottom_wall=False)
-    cell_three = Cell(50, 100, 200, 250, win, top_wall=False, right_wall=False)
-    cell_four = Cell(100, 150, 200, 250, win, left_wall=False, right_wall=False)
+    c = Cell(win)
+    c.has_left_wall, c.has_right_wall = False, False
+    c.draw(100, 100, 125, 125)
 
-    cell_one.draw()
-    cell_two.draw()
-    cell_three.draw()
-    cell_four.draw()
+    c = Cell(win)
+    c.has_left_wall, c.has_bottom_wall = False, False
+    c.draw(125, 100, 150, 125)
+
+    c = Cell(win)
+    c.has_top_wall = False
+    c.draw(125, 125, 175, 150)
 
     win.wait_for_close()
 
