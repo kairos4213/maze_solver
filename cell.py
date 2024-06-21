@@ -36,3 +36,20 @@ class Cell:
             self._win.draw_line(
                 Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
             )
+
+    def draw_move(self, to_cell, undo=False):
+        bg_color = "red"
+        if undo:
+            bg_color = "gray"
+
+        current_center_x = ((self._x2 - self._x1) / 2) + self._x1
+        current_center_y = ((self._y2 - self._y1) / 2) + self._y1
+        target_center_x = ((to_cell._x2 - to_cell._x1) / 2) + to_cell._x1
+        target_center_y = ((to_cell._y2 - to_cell._y1) / 2) + to_cell._y1
+
+        line_to_cell = Line(
+            Point(current_center_x, current_center_y),
+            Point(target_center_x, target_center_y),
+        )
+
+        self._win.draw_line(line_to_cell, bg_color)
