@@ -38,9 +38,9 @@ class Cell:
             )
 
     def draw_move(self, to_cell, undo=False):
-        bg_color = "red"
+        line_color = "red"
         if undo:
-            bg_color = "gray"
+            line_color = "gray"
 
         current_center_x = ((self._x2 - self._x1) / 2) + self._x1
         current_center_y = ((self._y2 - self._y1) / 2) + self._y1
@@ -52,4 +52,4 @@ class Cell:
             Point(target_center_x, target_center_y),
         )
 
-        self._win.draw_line(line_to_cell, bg_color)
+        self._win.draw_line(line_to_cell, line_color)
