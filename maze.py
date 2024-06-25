@@ -25,6 +25,7 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
+        self._reset_cells_visited()
 
     def _create_cells(self):
         for i in range(self._num_cols):
@@ -102,3 +103,76 @@ class Maze:
                 self._cells[i][j + 1].has_top_wall = False
 
             self._break_walls_r(next_cell_index[0], next_cell_index[1])
+
+    def _reset_cells_visited(self):
+        for col in self._cells:
+            for cell in col:
+                cell.visited = False
+
+    def solve(self):
+        return self._solve_r(i=0, j=0)
+
+    def _solve_r(self, i, j):
+        current_cell = self._cells[i][j]
+        self._animate()
+        current_cell.visited = True
+        if current_cell == self._cells[-1][-1]:
+            return True
+
+        # Check right neighbor
+        if (
+            i < self._num_cols - 1
+            and self._cells[i + 1][j]
+            and not self._cells[i + 1][j].has_left_wall
+            and not self._cells[i + 1][j].visited
+        ):
+            current_cell.draw_move(self._cells[i + 1][j])
+            check_cell = self._solve_r(i + 1, j)
+            if check_cell:
+                return True
+            else:
+                current_cell.draw_move(self._cells[i + 1][j], True)
+
+        # Check left neighbor
+        if (
+            i > 0
+            and self._cells[i - 1][j]
+            and not self._cells[i - 1][j].has_right_wall
+            and not self._cells[i - 1][j].visited
+        ):
+            current_cell.draw_move(self._cells[i - 1][j])
+            check_cell = self._solve_r(i - 1, j)
+            if check_cell:
+                return True
+            else:
+                current_cell.draw_move(self._cells[i - 1][j], True)
+
+        # Check top neighbor
+        if (
+            j > 0
+            and self._cells[i][j - 1]
+            and not self._cells[i][j - 1].has_bottom_wall
+            and not self._cells[i][j - 1].visited
+        ):
+            current_cell.draw_move(self._cells[i][j - 1])
+            check_cell = self._solve_r(i, j - 1)
+            if check_cell:
+                return True
+            else:
+                current_cell.draw_move(self._cells[i][j - 1], True)
+
+        # Check bottom neighbor
+        if (
+            j < self._num_rows - 1
+            and self._cells[i][j + 1]
+            and not self._cells[i][j + 1].has_top_wall
+            and not self._cells[i][j + 1].visited
+        ):
+            current_cell.draw_move(self._cells[i][j + 1])
+            check_cell = self._solve_r(i, j + 1)
+            if check_cell:
+                return True
+            else:
+                current_cell.draw_move(self._cells[i][j + 1], True)
+
+        return False
